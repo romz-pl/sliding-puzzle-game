@@ -110,12 +110,9 @@ bool found = false;
     m_os.Erase();
     m_mem.Erase();
 
-    {
-    const size_t maxChildNo = graph.MaxChildNo();
-    m_child.resize(maxChildNo);
-    m_cost.resize(maxChildNo);
-    m_heur.resize(maxChildNo);
-    }
+    m_child.resize(Graph::MAX_CHILD_NO);
+    m_cost.resize(Graph::MAX_CHILD_NO);
+    m_heur.resize(Graph::MAX_CHILD_NO);
 
     const Cost h = graph.CalcH(beg);
     p = m_mem.New();

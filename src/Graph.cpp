@@ -16,7 +16,7 @@ static const std::array< char, State::TILENO> goalTmp = {
 const State Graph::m_goal(goalTmp);
 
 // Allowed moves collected in tabular form
-const char Graph::m_moves[State::TILENO][MAXCHILDNO + 1] = {
+const char Graph::m_moves[State::TILENO][MAX_CHILD_NO + 1] = {
     {2, 1, 5},    // 0
     {3, 0, 2, 6}, // 1
     {3, 1, 3, 7}, // 2

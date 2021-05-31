@@ -38,7 +38,6 @@ public:
     Cost CalcH(const State& x); 
     bool IsGoal(const State& x) const;
 
-    size_t MaxChildNo(void) const;
     size_t GetChildren(const State& x, std::vector<State>& child, std::vector<Cost>& cost, std::vector<Cost>& heur);
 
 private:
@@ -47,15 +46,17 @@ private:
     static char MovesNo( uint8_t idx );
     static char Move( uint8_t sp, uint8_t j );
 
+public:
+    // Maximal number of children for any state in graph (space state)
+    inline static constexpr unsigned int MAX_CHILD_NO = 4;
+
 private:
     // The GOAL state
     static const State m_goal;
 
-    // Maximal number of children for any state in graph (space state)
-    inline static constexpr unsigned int MAXCHILDNO = 4;
 
     // Allowed moves. The first element of each row determines number of allowed moves.
-    static const char m_moves[State::TILENO][MAXCHILDNO + 1];
+    static const char m_moves[State::TILENO][MAX_CHILD_NO + 1];
 
 
     // Number of pre-defined samples (exemplary begin states). 
@@ -64,15 +65,6 @@ private:
     // Pre-defined exemplary states
     static const char m_sample[SAMPLENO][State::TILENO];
 };
-
-//
-// Returns maximum number of children for any state in graph (space state)
-//
-inline
-size_t Graph::MaxChildNo(void) const
-{
-    return MAXCHILDNO;
-}
 
 //
 // Returns "true" if "x" is the GOAL state
@@ -100,7 +92,7 @@ inline
 char Graph::Move( uint8_t sp, uint8_t j )
 {
     assert( sp < State::TILENO );
-    assert( j < MAXCHILDNO );
+    assert( j < MAX_CHILD_NO );
     return m_moves[ sp ][ j + 1 ];
 }
 
