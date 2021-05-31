@@ -51,8 +51,17 @@ public:
     inline static constexpr unsigned int MAX_CHILD_NO = 4;
 
 private:
-    // The GOAL state
-    static const State m_goal;
+
+    // The GOAL state.
+    // The algorithm works ONLY FOR THIS GOAL STATE.
+    // If you want to modify the goal state, tables State::m_coorX, State::m_coorY
+    // must be modyfied as well!
+    inline static const State m_goal{std::array< char, State::TILENO>{
+                                  1,  2,  3,  4,  5,
+                                  6,  7,  8,  9, 10,
+                                 11, 12, 13, 14, 15,
+                                 16, 17, 18, 19, 20,
+                                 21, 22, 23, 24,  0}};
 
 
     // Allowed moves. The first element of each row determines number of allowed moves.

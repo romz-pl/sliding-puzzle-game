@@ -1,20 +1,6 @@
 #include "Graph.h"
 #include <cstdlib>
 
-
-// The GOAL state.
-// The algorithm works ONLY FOR THIS GOAL STATE.
-//
-// If you want to modify the goal state, tables State::m_coorX, State::m_coorY
-// must be modyfied as well!
-static const std::array< char, State::TILENO> goalTmp = {
-     1,  2,  3,  4,  5,
-     6,  7,  8,  9, 10,
-    11, 12, 13, 14, 15,
-    16, 17, 18, 19, 20,
-    21, 22, 23, 24,  0}; // This is temporary variable used to initilialize GOAL state
-const State Graph::m_goal(goalTmp);
-
 // Allowed moves collected in tabular form
 const char Graph::m_moves[State::TILENO][MAX_CHILD_NO + 1] = {
     {2, 1, 5},    // 0
