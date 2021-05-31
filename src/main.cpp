@@ -113,7 +113,6 @@ void RunAstar( const State& beg )
 {
     Astar as;
     Graph graph;
-    std::vector<State> path;
     bool pathFound;
 
 
@@ -121,15 +120,15 @@ void RunAstar( const State& beg )
     beg.Print(stdout);
     std::cout << "\n\nComputing...";
 
-    pathFound = as.Find(graph, beg, path);
-    if(!pathFound)
+    const std::optional<std::vector<State>> path = as.Find(graph, beg);
+    if(!path.has_value())
     {
         std::cout << "Path NOT found for START state:\n";
         beg.Print(stdout);
         return;
     }
     std::cout << "...Ok\n";
-    const size_t stateNo = path.size();
+    const size_t stateNo = path.value().size();
     as.PrintStats();
 
     std::cout << "\nFINAL-NUMBER-OF-STATES:\n";
@@ -142,7 +141,7 @@ void RunAstar( const State& beg )
     for(size_t i = 0; i < stateNo; i++)
     {
         if(i < stateNo - 1)
-            path[i + 1].PrintDiff(path[i]);
+            path.value()[i + 1].PrintDiff(path.value()[i]);
     }
     std::cout << "\n";
 

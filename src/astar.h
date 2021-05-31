@@ -32,6 +32,7 @@
 #include "Graph.h"
 #include <list>
 #include <iostream>
+#include <optional>
 
 template<
     template <typename S> class CS = ClosedSetHash,
@@ -41,7 +42,7 @@ class Astar
 public:
     explicit Astar(unsigned int chunkSize = 10000);
 
-    bool Find(Graph& graph, const State& beg, std::vector<State>& path);
+    std::optional<std::vector<State>> Find(Graph& graph, const State& beg);
 
     size_t ClosedNo(void) const { return m_cs.Size(); }
     size_t OpenNo  (void) const { return m_os.Size(); }
@@ -50,7 +51,7 @@ public:
 
 private:
     void ChildLoop(Graph& graph, PathNode<State>* x);
-    void CreatePath(const PathNode<State>* target, std::vector<State>& path);
+    std::vector<State> CreatePath(const PathNode<State>* target);
 
 private:
     // Closed set
@@ -93,11 +94,10 @@ Astar<CS, OS>::Astar(unsigned int chunkSize) : m_mem(chunkSize)
 // path  [OUT] - found solution, vector of states in graph
 //
 template<template <typename S> class CS, template <typename S> class OS>
-bool Astar<CS, OS>::Find(Graph& graph, const State& beg, std::vector<State>& path)
+std::optional<std::vector<State>> Astar<CS, OS>::Find(Graph& graph, const State& beg)
 {
 size_t cnt = 0;
 PathNode<State>* p;
-bool found = false;
 
 #ifdef ASTAR_STATISTICS
     m_stats_loopNo = 0;
@@ -129,9 +129,7 @@ bool found = false;
         p = m_os.Best();
         if(graph.IsGoal(p->m_state))
         {
-            CreatePath(p, path);
-            found = true;
-            break;
+            return CreatePath(p);
         }
         m_os.RemoveBest();
         m_cs.Add(p);
@@ -139,7 +137,7 @@ bool found = false;
         ChildLoop(graph, p);
     }
 
-    return found;
+    return {};
 }
 
 //
@@ -183,7 +181,7 @@ PathNode<State> *p;
 // Creates the path being the result of A-Star algorithm
 //
 template<template <typename S> class CS, template <typename S> class OS>
-void Astar<CS, OS>::CreatePath(const PathNode<State>* node, std::vector<State>& path)
+std::vector<State> Astar<CS, OS>::CreatePath(const PathNode<State>* node)
 {
 std::list<State> tmp; // Temporary list for storing states in proper order
 
@@ -197,9 +195,14 @@ std::list<State> tmp; // Temporary list for storing states in proper order
     typename std::list<State>::const_iterator it;
     size_t i = 0;
     
+    std::vector<State> path;
     path.resize(tmp.size()); // 
     for(it = tmp.begin(); it != tmp.end(); ++it, ++i)
+    {
         path[i] = *it;
+    }
+
+    return path;
 }
 
 //
