@@ -19,3 +19,7 @@ F denotes free slot
 3. The [A* algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm) has been implemeted for solving the puzzle 24 game.
 
 4. The input to the game is the initial configuration on the board. The solutions is the sequence of moves leading from the initial configuration to the final configuration. The final configuration for puzzle 24 game is presented above.
+
+5. In order to apply the A* algorithm must define the graph and the distance between graph's node.
+
+6. In my approach the node of the graph is defined as a two-dimmensional squared array `5x5`. Each element of this array holds unique integer `x` in the range `0 <= x < 25`.
