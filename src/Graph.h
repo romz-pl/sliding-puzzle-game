@@ -29,10 +29,6 @@
 class Graph
 {
 public:
-    // Declaration of type "State" is required by template class "Astar"
-    using State = ::State;
-
-public:
     Cost CalcH(const State& x); 
     bool IsGoal(const State& x) const;
 

@@ -111,7 +111,7 @@ int main(int argc, char* argv[])
 
 void RunAstar( const State& beg )
 {
-    Astar<Graph> as;
+    Astar as;
     Graph graph;
     std::vector<State> path;
     bool pathFound;

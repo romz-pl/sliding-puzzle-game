@@ -29,17 +29,15 @@
 
 #include "memmgr.h"
 #include "Cost.h"
+#include "Graph.h"
 #include <list>
 #include <iostream>
 
-template<typename Graph, 
+template<
     template <typename S> class CS = ClosedSetHash,
     template <typename S> class OS = OpenSetHash> 
 class Astar
 {
-private:
-    using State = typename Graph::State;
-
 public:
     explicit Astar(unsigned int chunkSize = 10000);
 
@@ -82,8 +80,8 @@ private:
 // Constructor
 // "chunkSize" - number of elements allocated when increased, in memory allocator
 //
-template<typename Graph, template <typename S> class CS, template <typename S> class OS> 
-Astar<Graph, CS, OS>::Astar(unsigned int chunkSize) : m_mem(chunkSize)
+template<template <typename S> class CS, template <typename S> class OS>
+Astar<CS, OS>::Astar(unsigned int chunkSize) : m_mem(chunkSize)
 {
 }
 
@@ -94,8 +92,8 @@ Astar<Graph, CS, OS>::Astar(unsigned int chunkSize) : m_mem(chunkSize)
 // beg   [IN]  - start state, member of the graph
 // path  [OUT] - found solution, vector of states in graph
 //
-template<typename Graph, template <typename S> class CS, template <typename S> class OS> 
-bool Astar<Graph, CS, OS>::Find(Graph& graph, const State& beg, std::vector<State>& path)
+template<template <typename S> class CS, template <typename S> class OS>
+bool Astar<CS, OS>::Find(Graph& graph, const State& beg, std::vector<State>& path)
 {
 size_t cnt = 0;
 PathNode<State>* p;
@@ -147,8 +145,8 @@ bool found = false;
 //
 // Loop over all children of "node"
 //
-template<typename Graph, template <typename S> class CS, template <typename S> class OS> 
-void Astar<Graph, CS, OS>::ChildLoop(Graph& graph, PathNode<State>* node)
+template<template <typename S> class CS, template <typename S> class OS>
+void Astar<CS, OS>::ChildLoop(Graph& graph, PathNode<State>* node)
 {
 PathNode<State> *p;
 
@@ -184,8 +182,8 @@ PathNode<State> *p;
 //
 // Creates the path being the result of A-Star algorithm
 //
-template<typename Graph, template <typename S> class CS, template <typename S> class OS> 
-void Astar<Graph, CS, OS>::CreatePath(const PathNode<State>* node, std::vector<State>& path)
+template<template <typename S> class CS, template <typename S> class OS>
+void Astar<CS, OS>::CreatePath(const PathNode<State>* node, std::vector<State>& path)
 {
 std::list<State> tmp; // Temporary list for storing states in proper order
 
@@ -207,8 +205,8 @@ std::list<State> tmp; // Temporary list for storing states in proper order
 //
 // Writes statistics to log file
 //
-template<typename Graph, template <typename S> class CS, template <typename S> class OS> 
-void Astar<Graph, CS, OS>::PrintStats() const
+template<template <typename S> class CS, template <typename S> class OS>
+void Astar<CS, OS>::PrintStats() const
 {
 #ifdef ASTAR_STATISTICS
     std::cout << "\nSTATISTICS:\n";
