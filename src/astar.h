@@ -48,8 +48,6 @@ public:
     size_t ClosedNo(void) const { return m_cs.Size(); }
     size_t OpenNo  (void) const { return m_os.Size(); }
 
-    time_t FindTime(void) const { return m_findTime; }
-
     void PrintStats() const;
 
 private:
@@ -62,9 +60,6 @@ private:
 
     // Open set
     OS<State> m_os;
-
-    // Calculation time. In seconds
-    time_t m_findTime;
 
     // Generated children for analyzed node. Auxiliary buffer.
     std::vector<State> m_child;
@@ -105,14 +100,11 @@ bool Astar<Graph, CS, OS>::Find(Graph& graph, const State& beg, std::vector<Stat
 {
 size_t cnt = 0;
 PathNode<State>* p;
-time_t begTime, endTime;
 bool found = false;
 
 #ifdef ASTAR_STATISTICS
     m_stats_loopNo = 0;
 #endif
-
-    ::time(&begTime);
 
     m_cs.Erase();
     m_os.Erase();
@@ -153,8 +145,6 @@ bool found = false;
         ChildLoop(graph, p);
     }
 
-    ::time(&endTime);
-    m_findTime = endTime - begTime; 
     return found;
 }
 
