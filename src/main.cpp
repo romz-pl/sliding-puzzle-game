@@ -155,7 +155,6 @@ void RunAstar( const State& beg )
     }*/ 
 
     
-    // printf("\n\nCALCULATION-TIME = %d second(s)\n\n", as.FindTime());
     // printf("\n***** Calculations completed successfully! *****\n\n");
 }
 
