@@ -6,7 +6,7 @@
 
 
 // X-coordinates for tiles 
-const char StateP25::m_coorX[StateP25::TILENO] = {
+const char State::m_coorX[State::TILENO] = {
     0, 1, 2, 3, 4,
     0, 1, 2, 3, 4,
     0, 1, 2, 3, 4,
@@ -14,7 +14,7 @@ const char StateP25::m_coorX[StateP25::TILENO] = {
     0, 1, 2, 3, 4};
 
 // Y-coordinates for tiles 
-const char StateP25::m_coorY[StateP25::TILENO] = {
+const char State::m_coorY[State::TILENO] = {
     0, 0, 0, 0, 0,
     1, 1, 1, 1, 1,
     2, 2, 2, 2, 2,
@@ -22,7 +22,7 @@ const char StateP25::m_coorY[StateP25::TILENO] = {
     4, 4, 4, 4, 4};
 
 // Label of tiles. 
-const char* const StateP25::m_label[TILENO] = {
+const char* const State::m_label[TILENO] = {
     "  ", " 1", " 2", " 3", " 4",
     " 5", " 6", " 7", " 8", " 9",
     "10", "11", "12", "13", "14",
@@ -33,7 +33,7 @@ const char* const StateP25::m_label[TILENO] = {
 //
 // Constructor, Default
 //
-StateP25::StateP25()
+State::State()
 {
     m_tab.fill( 0 );
 }
@@ -42,7 +42,7 @@ StateP25::StateP25()
 // Constructor
 // "tab" defines the initial state
 //
-StateP25::StateP25( const std::array< char, StateP25::TILENO > tab )
+State::State( const std::array< char, State::TILENO > tab )
 {
     for(int i = 0; i < TILENO; i++)
         m_tab[i] = tab[i];
@@ -54,7 +54,7 @@ StateP25::StateP25( const std::array< char, StateP25::TILENO > tab )
 //
 // Less operator
 //
-bool StateP25::operator<(const StateP25& s) const
+bool State::operator<(const State& s) const
 {
     for(int i = 0; i < TILENO; i++)
     {
@@ -70,7 +70,7 @@ bool StateP25::operator<(const StateP25& s) const
 //
 // Prints state in formated form on the screan
 //
-void StateP25::Print(FILE* out) const
+void State::Print(FILE* out) const
 {
     fprintf(out,
         "   %s %s %s %s %s\n"
@@ -88,7 +88,7 @@ void StateP25::Print(FILE* out) const
 //
 // Reads the state from the file.
 //
-void StateP25::Read( const std::string& path )
+void State::Read( const std::string& path )
 {
     std::ifstream in( path, std::ios::in );
     if( !in )
@@ -167,7 +167,7 @@ void StateP25::Read( const std::string& path )
 //
 // Returns position of SPACE
 //
-char StateP25::SpaceIdx(void) const
+char State::SpaceIdx(void) const
 {
 char i = 0;
 
@@ -183,7 +183,7 @@ char i = 0;
 //
 // Prints the difference between "this" state and "next" state. 
 //
-void StateP25::PrintDiff( const StateP25& next ) const
+void State::PrintDiff( const State& next ) const
 {
 // Name of moves
 //static const char * const moveName[4] = {"Right", "Left", "Up", "Down"};

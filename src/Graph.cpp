@@ -1,22 +1,22 @@
-#include "graphp25.h"
+#include "Graph.h"
 #include <cstdlib>
 
 
 // The GOAL state.
 // The algorithm works ONLY FOR THIS GOAL STATE.
 //
-// If you want to modify the goal state, tables StateP25::m_coorX, StateP25::m_coorY
+// If you want to modify the goal state, tables State::m_coorX, State::m_coorY
 // must be modyfied as well!
-static const std::array< char, StateP25::TILENO> goalTmp = {
+static const std::array< char, State::TILENO> goalTmp = {
      1,  2,  3,  4,  5,
      6,  7,  8,  9, 10,
     11, 12, 13, 14, 15,
     16, 17, 18, 19, 20,
     21, 22, 23, 24,  0}; // This is temporary variable used to initilialize GOAL state
-const StateP25 GraphP25::m_goal(goalTmp);
+const State Graph::m_goal(goalTmp);
 
 // Allowed moves collected in tabular form
-const char GraphP25::m_moves[StateP25::TILENO][MAXCHILDNO + 1] = {
+const char Graph::m_moves[State::TILENO][MAXCHILDNO + 1] = {
     {2, 1, 5},    // 0
     {3, 0, 2, 6}, // 1
     {3, 1, 3, 7}, // 2
@@ -45,7 +45,7 @@ const char GraphP25::m_moves[StateP25::TILENO][MAXCHILDNO + 1] = {
 };
 
 // Exemplary begin states
-const char GraphP25::m_sample[SAMPLENO][StateP25::TILENO] = {
+const char Graph::m_sample[SAMPLENO][State::TILENO] = {
     {2,8,3,5,9,1,6,7,4,0,11,12,13,14,10,16,17,18,19,15,21,22,23,24,20}, // 15 moves (VERY EASY)
     {1,7,2,8,4,6,9,13,3,5,11,17,12,14,10,16,18,23,22,15,21,24,19,20,0}, // 30 moves (EASY)
     {1,4,3,5,10,6,7,8,2,9,23,11,13,14,15,12,0,18,24,19,17,16,21,22,20}, // 42 moves
@@ -68,8 +68,8 @@ const char GraphP25::m_sample[SAMPLENO][StateP25::TILENO] = {
 // Generates children for state "x". Generated states (children) are stored
 // in "child", "cost", "heur" arrays.
 //
-size_t GraphP25::GetChildren(const StateP25& x, std::vector<StateP25>& child, 
-    std::vector<StateP25::Cost>& cost, std::vector<StateP25::Cost>& heur)
+size_t Graph::GetChildren(const State& x, std::vector<State>& child,
+    std::vector<State::Cost>& cost, std::vector<State::Cost>& heur)
 {
 const char idx = x.SpaceIdx();
 const char movesNo = MovesNo(idx);
@@ -92,12 +92,12 @@ const char movesNo = MovesNo(idx);
 //
 // Calculates heurictic for state "s" as Manhatten distance 
 //
-StateP25::Cost GraphP25::Manhattan(const StateP25& s) const
+State::Cost Graph::Manhattan(const State& s) const
 {
 char cx, cy, gx, gy;
-StateP25::Cost h = 0;
+State::Cost h = 0;
 
-    for(char i = 0; i < StateP25::TILENO; i++)
+    for(char i = 0; i < State::TILENO; i++)
     {
         // do not count the blank 
         if(s.IsSpace(i))

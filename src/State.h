@@ -1,5 +1,5 @@
-#ifndef ASTAR_STATEP25_H
-#define ASTAR_STATEP25_H
+#ifndef ASTAR_STATE_H
+#define ASTAR_STATE_H
 
 //
 // AUTHOR: Zbigniew Romanowski
@@ -31,7 +31,7 @@
 #include <array>
 #include <cstdint>
 
-class StateP25
+class State
 {
 public:
     // Type used to evaluate the heuristic and to evaluate the cost between two connected states.
@@ -46,11 +46,11 @@ public:
 
 
 public:
-    StateP25( );
-    explicit StateP25( const std::array< char, TILENO> tab );
+    State( );
+    explicit State( const std::array< char, TILENO> tab );
 
-    bool operator==(const StateP25& s) const;
-    bool operator< (const StateP25& s) const;
+    bool operator==(const State& s) const;
+    bool operator< (const State& s) const;
 
     char SpaceIdx( ) const;
     bool IsSpace( uint8_t idx ) const;
@@ -61,7 +61,7 @@ public:
     char Y( uint8_t idx ) const;
 
     void Print(FILE* out) const;
-    void PrintDiff(const StateP25& next) const;
+    void PrintDiff(const State& next) const;
 
     void Read( const std::string& file );
 
@@ -75,10 +75,10 @@ private:
 
 private:
     // X-coordinates of the GOAL state
-    static const char m_coorX[StateP25::TILENO];
+    static const char m_coorX[State::TILENO];
 
     // Y-coordinates of the GOAL state
-    static const char m_coorY[StateP25::TILENO];
+    static const char m_coorY[State::TILENO];
 
     // Names of tiles on the board
     static const char* const m_label[TILENO];
@@ -88,7 +88,7 @@ private:
 // Returns "true", if on position "idx" is SPACE
 //
 inline
-bool StateP25::IsSpace( uint8_t idx ) const
+bool State::IsSpace( uint8_t idx ) const
 {
     assert( idx < TILENO );
     return ( m_tab[ idx ] == 0 );
@@ -98,7 +98,7 @@ bool StateP25::IsSpace( uint8_t idx ) const
 // Changes the positions of two tiles
 //
 inline
-void StateP25::Swap(char oldPos, char newPos)
+void State::Swap(char oldPos, char newPos)
 {
     const char tmp = m_tab[newPos];
 
@@ -111,7 +111,7 @@ void StateP25::Swap(char oldPos, char newPos)
 // Returns label of i-th tile.
 //
 inline
-const char* StateP25::Lab( uint8_t idx ) const
+const char* State::Lab( uint8_t idx ) const
 {
     return m_label[ static_cast<uint>( m_tab[ idx ] ) ];
 }
@@ -120,7 +120,7 @@ const char* StateP25::Lab( uint8_t idx ) const
 // Returns X-coordinate of i-th tile
 //
 inline
-char StateP25::X( uint8_t idx ) const
+char State::X( uint8_t idx ) const
 {
     return m_coorX[ static_cast<uint>( m_tab[ idx ] ) ];
 }
@@ -129,7 +129,7 @@ char StateP25::X( uint8_t idx ) const
 // Returns Y-coordinate of i-th tile
 //
 inline
-char StateP25::Y( uint8_t idx ) const
+char State::Y( uint8_t idx ) const
 {
     return m_coorY[ static_cast<uint>( m_tab[ idx ] ) ];
 }
@@ -139,7 +139,7 @@ char StateP25::Y( uint8_t idx ) const
 // Equality operator
 //
 inline
-bool StateP25::operator==( const StateP25& s ) const
+bool State::operator==( const State& s ) const
 {
     for( uint8_t i = 0; i < TILENO; i++ )
     {

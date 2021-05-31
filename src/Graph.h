@@ -15,7 +15,7 @@
 //
 // 2. This is weighted graph of states.
 // 
-// 3. Each state of graph is represented by object of class StateP25.
+// 3. Each state of graph is represented by object of class State.
 //
 // 4. Distance between states is defined by Manhattan metric.
 //
@@ -25,14 +25,14 @@
 #include "State.h"
 #include <vector>
 
-class GraphP25
+class Graph
 {
 public:
     // Declaration of type "State" is required by template class "Astar"
-    using State = StateP25;
+    using State = ::State;
 
     // Declaration of type "Cost" is required by template class "Astar"
-    using Cost = StateP25::Cost;
+    using Cost = State::Cost;
 
 public:
     Cost CalcH(const State& x); 
@@ -42,34 +42,34 @@ public:
     size_t GetChildren(const State& x, std::vector<State>& child, std::vector<Cost>& cost, std::vector<Cost>& heur);
 
 private:
-    StateP25::Cost Manhattan(const StateP25& x) const;
+    State::Cost Manhattan(const State& x) const;
 
     static char MovesNo( uint8_t idx );
     static char Move( uint8_t sp, uint8_t j );
 
 private:
     // The GOAL state
-    static const StateP25 m_goal;
+    static const State m_goal;
 
     // Maximal number of children for any state in graph (space state)
     inline static constexpr unsigned int MAXCHILDNO = 4;
 
     // Allowed moves. The first element of each row determines number of allowed moves.
-    static const char m_moves[StateP25::TILENO][MAXCHILDNO + 1];
+    static const char m_moves[State::TILENO][MAXCHILDNO + 1];
 
 
     // Number of pre-defined samples (exemplary begin states). 
     inline static constexpr unsigned int SAMPLENO = 9;
 
     // Pre-defined exemplary states
-    static const char m_sample[SAMPLENO][StateP25::TILENO];
+    static const char m_sample[SAMPLENO][State::TILENO];
 };
 
 //
 // Returns maximum number of children for any state in graph (space state)
 //
 inline
-size_t GraphP25::MaxChildNo(void) const
+size_t Graph::MaxChildNo(void) const
 {
     return MAXCHILDNO;
 }
@@ -78,7 +78,7 @@ size_t GraphP25::MaxChildNo(void) const
 // Returns "true" if "x" is the GOAL state
 //
 inline
-bool GraphP25::IsGoal(const StateP25& x) const
+bool Graph::IsGoal(const State& x) const
 {
     return (x == m_goal);
 }
@@ -87,9 +87,9 @@ bool GraphP25::IsGoal(const StateP25& x) const
 // Return number of moves, when space is on i-th position 
 //
 inline
-char GraphP25::MovesNo( uint8_t idx )
+char Graph::MovesNo( uint8_t idx )
 {
-    assert( idx < StateP25::TILENO );
+    assert( idx < State::TILENO );
     return m_moves[ idx ][ 0 ];
 }
 
@@ -97,9 +97,9 @@ char GraphP25::MovesNo( uint8_t idx )
 // Returns j-th allowed position, when space is on "sp" position
 //
 inline
-char GraphP25::Move( uint8_t sp, uint8_t j )
+char Graph::Move( uint8_t sp, uint8_t j )
 {
-    assert( sp < StateP25::TILENO );
+    assert( sp < State::TILENO );
     assert( j < MAXCHILDNO );
     return m_moves[ sp ][ j + 1 ];
 }
@@ -108,7 +108,7 @@ char GraphP25::Move( uint8_t sp, uint8_t j )
 // Returns value of heuristic from "x" to GOAL state
 //
 inline
-StateP25::Cost GraphP25::CalcH(const StateP25& x)
+State::Cost Graph::CalcH(const State& x)
 {
     return Manhattan(x);
 }
