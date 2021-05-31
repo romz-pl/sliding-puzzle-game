@@ -137,7 +137,7 @@ public:
 template<typename S>
 class OpenSet
 {
-    typedef typename S::Cost Cost;
+    using Cost = typename S::Cost;
 public:
     OpenSet(void);
     ~OpenSet(void);

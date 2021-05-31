@@ -35,7 +35,7 @@ class StateP25
 {
 public:
     // Type used to evaluate the heuristic and to evaluate the cost between two connected states.
-    typedef int Cost;
+    using Cost = int;
 
 public:
     // WIDTH: Width of the squared board

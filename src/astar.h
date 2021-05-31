@@ -37,8 +37,8 @@ template<typename Graph,
 class Astar
 {
 private:
-    typedef typename Graph::State State;
-    typedef typename Graph::Cost  Cost;
+    using State = typename Graph::State;
+    using Cost = typename Graph::Cost;
 
 public:
     explicit Astar(unsigned int chunkSize = 10000);

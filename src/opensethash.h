@@ -32,7 +32,7 @@
 template<typename S>
 class OpenSetHash
 {
-    typedef typename S::Cost Cost;
+    using Cost = typename S::Cost;
 public:
     OpenSetHash(void);
 

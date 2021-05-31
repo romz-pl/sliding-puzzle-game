@@ -29,10 +29,10 @@ class GraphP25
 {
 public:
     // Declaration of type "State" is required by template class "Astar"
-    typedef StateP25 State;
+    using State = StateP25;
 
     // Declaration of type "Cost" is required by template class "Astar"
-    typedef StateP25::Cost Cost;
+    using Cost = StateP25::Cost;
 
 public:
     Cost CalcH(const State& x); 

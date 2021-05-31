@@ -20,7 +20,7 @@
 template<typename S>
 class PathNode
 {
-    typedef typename S::Cost Cost;
+    using Cost = typename S::Cost;
 public:
     PathNode(void) : m_parent(nullptr), m_g(0), m_h(0) {}
     PathNode(const S& state, PathNode* parent, Cost g, Cost h)
