@@ -23,3 +23,10 @@ F denotes free slot
 5. In order to apply the A* algorithm must define the graph and the distance between graph's node.
 
 6. In my approach the node of the graph is defined as a two-dimmensional squared array `5x5`. Each element of this array holds unique integer `x` in the range `0 <= x < 25`.
+
+7. From the definition of sliding puzzle game, it is known, that one piece of the board is empty. Only the piece that is in the direct neighborhood of the empty slot can be moved into this position. Moving the tile the new configuration of the board is defined. That's way the next node in the the game graph is defined.
+
+9. From the above it follows that the number of edges directed from the given node of the graph can be `2` or `3` or `4`.
+    * There are `2` edges if empty slot is in the corner of the board.
+    * There are `3` edges if empty slot is alligne to the border.
+    * Otherwise there are `4` edges.
