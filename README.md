@@ -20,7 +20,7 @@ F denotes free slot
 
 4. The input to the game is the initial configuration on the board. The solutions is the sequence of moves leading from the initial configuration to the final configuration. The final configuration for puzzle 24 game is presented above.
 
-5. In order to apply the A* algorithm must define the graph and the distance between graph's node.
+5. In order to apply the A* algorithm, the graph and the distance between graph's nodes must be defined.
 
 6. In my approach the node of the graph is defined as a two-dimmensional squared array `5x5`. Each element of this array holds unique integer `x` in the range `0 <= x < 25`.
 
@@ -30,3 +30,5 @@ F denotes free slot
     * There are `2` edges if empty slot is in the corner of the board.
     * There are `3` edges if empty slot is alligne to the border.
     * Otherwise there are `4` edges.
+
+10. The second required input to the A* algorithm is the definition of the distance between nodes in the graph. In my approach the distance is defined as the sum of differences between positions of tiles on the board, also called [Taxicab distance](https://en.wikipedia.org/wiki/Taxicab_geometry).
