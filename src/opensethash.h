@@ -24,6 +24,7 @@
 // 6. OPEN SET holds only pointers to GRAPH STATE.
 //
 
+#include "Cost.h"
 #include "pathnode.h"
 #include "hashset.h"
 #include <set>
@@ -32,7 +33,6 @@
 template<typename S>
 class OpenSetHash
 {
-    using Cost = typename S::Cost;
 public:
     OpenSetHash(void);
 

@@ -26,7 +26,7 @@ const char Graph::m_sample[SAMPLENO][State::TILENO] = {
 // in "child", "cost", "heur" arrays.
 //
 size_t Graph::GetChildren(const State& x, std::vector<State>& child,
-    std::vector<State::Cost>& cost, std::vector<State::Cost>& heur)
+    std::vector<Cost>& cost, std::vector<Cost>& heur)
 {
 const char idx = x.SpaceIdx();
 const char movesNo = MovesNo(idx);
@@ -49,10 +49,10 @@ const char movesNo = MovesNo(idx);
 //
 // Calculates heurictic for state "s" as Manhatten distance 
 //
-State::Cost Graph::Manhattan(const State& s) const
+Cost Graph::Manhattan(const State& s) const
 {
 char cx, cy, gx, gy;
-State::Cost h = 0;
+Cost h = 0;
 
     for(char i = 0; i < State::TILENO; i++)
     {

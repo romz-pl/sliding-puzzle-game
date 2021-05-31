@@ -22,17 +22,15 @@
 // 5. There are pre-defined (hard-coded) interesting targed configurations.
 //
 
-#include "State.h"
 #include <vector>
+#include "State.h"
+#include "Cost.h"
 
 class Graph
 {
 public:
     // Declaration of type "State" is required by template class "Astar"
     using State = ::State;
-
-    // Declaration of type "Cost" is required by template class "Astar"
-    using Cost = State::Cost;
 
 public:
     Cost CalcH(const State& x); 
@@ -41,7 +39,7 @@ public:
     size_t GetChildren(const State& x, std::vector<State>& child, std::vector<Cost>& cost, std::vector<Cost>& heur);
 
 private:
-    State::Cost Manhattan(const State& x) const;
+    Cost Manhattan(const State& x) const;
 
     static char MovesNo( uint8_t idx );
     static char Move( uint8_t sp, uint8_t j );
@@ -135,7 +133,7 @@ char Graph::Move( uint8_t sp, uint8_t j )
 // Returns value of heuristic from "x" to GOAL state
 //
 inline
-State::Cost Graph::CalcH(const State& x)
+Cost Graph::CalcH(const State& x)
 {
     return Manhattan(x);
 }

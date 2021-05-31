@@ -17,10 +17,11 @@
 // 3. Object of class PathNode is an element of found path in A-star algorithm.
 //
 
+#include "Cost.h"
+
 template<typename S>
 class PathNode
 {
-    using Cost = typename S::Cost;
 public:
     PathNode(void) : m_parent(nullptr), m_g(0), m_h(0) {}
     PathNode(const S& state, PathNode* parent, Cost g, Cost h)

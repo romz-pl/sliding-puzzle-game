@@ -28,6 +28,7 @@
 #include "opensethash.h"
 
 #include "memmgr.h"
+#include "Cost.h"
 #include <list>
 #include <iostream>
 
@@ -38,7 +39,6 @@ class Astar
 {
 private:
     using State = typename Graph::State;
-    using Cost = typename Graph::Cost;
 
 public:
     explicit Astar(unsigned int chunkSize = 10000);
