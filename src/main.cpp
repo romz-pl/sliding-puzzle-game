@@ -3,18 +3,7 @@
 //         romz@wp.pl
 //
 //
-// ---------------------------------------------------------------------------------
-//      D E S C R I P T I O N
-// ---------------------------------------------------------------------------------
-// 1. Demonstration program of A-STAR algorithm.
-//
-// 2. It finds the solution for 25-Puzzle game for selected initial positions.
-//
-// 3. Selected positions are sorted according to lenth of searched state space.
-//
-// 4. Two GiB of memory is required for 0,1,2,3,4,6 configurations.
-//
-// 5. Sixteen GiB of memory is required for 6-th configuration.
+// This program solves Sliding puzzle for the board of size 5x5, i.e. puzzle 24 game.
 //
 
 
@@ -29,24 +18,38 @@
 void Intro();
 void RunAstar( const StateP25& beg );
 
+StateP25 Example01()
+{
+    std::array< char, StateP25::TILENO > tab{
+     2,  8,  3,  5,  9,
+     1,  6,  7,  4,  0, 
+    11, 12, 13, 14, 10,
+    16, 17, 18, 19, 15,
+    21, 22, 23, 24, 20,
+    };
+
+    return StateP25{ tab };
+}
+
 int main(int argc, char* argv[])
 {
     Intro( );
 
-    if( argc != 2 )
+    /*if( argc != 2 )
     {
         std::cout << "Invalid number of parameters.\n";
         std::cout << "Provide file name for the initial state\n";
         return 1;
     }
+    */
 
 
-    StateP25 beg;
-    beg.Read( argv[ 1 ] );
+    StateP25 beg = Example01();
+    //beg.Read( argv[ 1 ] );
 
     RunAstar( beg );
 	
-	return 0;
+    return 0;
 }
 
 
