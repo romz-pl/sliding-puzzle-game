@@ -113,7 +113,6 @@ void RunAstar( const State& beg )
 {
     Astar<Graph> as;
     Graph graph;
-    State::Cost cost;
     std::vector<State> path;
     bool pathFound;
 
@@ -122,7 +121,7 @@ void RunAstar( const State& beg )
     beg.Print(stdout);
     std::cout << "\n\nComputing...";
 
-    pathFound = as.Find(graph, beg, path, cost);
+    pathFound = as.Find(graph, beg, path);
     if(!pathFound)
     {
         std::cout << "Path NOT found for START state:\n";
