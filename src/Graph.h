@@ -54,8 +54,7 @@ private:
 
     // The GOAL state.
     // The algorithm works ONLY FOR THIS GOAL STATE.
-    // If you want to modify the goal state, tables State::m_coorX, State::m_coorY
-    // must be modyfied as well!
+    // If you want to modify the goal state, tables State::m_coorX, State::m_coorY must be modyfied as well!
     inline static const State m_goal{std::array< char, State::TILENO>{
                                   1,  2,  3,  4,  5,
                                   6,  7,  8,  9, 10,
@@ -64,8 +63,35 @@ private:
                                  21, 22, 23, 24,  0}};
 
 
-    // Allowed moves. The first element of each row determines number of allowed moves.
-    static const char m_moves[State::TILENO][MAX_CHILD_NO + 1];
+    // Allowed moves collected in tabular form.
+    // The first element of each row determines number of allowed moves.
+    inline static const char m_moves[State::TILENO][MAX_CHILD_NO + 1] = {
+        {2, 1, 5},    // 0
+        {3, 0, 2, 6}, // 1
+        {3, 1, 3, 7}, // 2
+        {3, 2, 4, 8}, // 3
+        {2, 3, 9},    // 4
+        {3, 0, 6, 10},    // 5
+        {4, 1, 5, 7, 11}, // 6
+        {4, 2, 6, 8, 12}, // 7
+        {4, 3, 7, 9, 13}, // 8
+        {3, 4, 8, 14},    // 9
+        {3, 5, 11, 15},     // 10
+        {4, 6, 10, 12, 16}, // 11
+        {4, 7, 11, 13, 17}, // 12
+        {4, 8, 12, 14, 18}, // 13
+        {3,  9, 13, 19},    // 14
+        {3, 10, 16, 20},     // 15
+        {4, 11, 15, 17, 21}, // 16
+        {4, 12, 16, 18, 22}, // 17
+        {4, 13, 17, 19, 23}, // 18
+        {3, 14, 18, 24},     // 19
+        {2, 15, 21},     // 20
+        {3, 16, 20, 22}, // 21
+        {3, 17, 21, 23}, // 22
+        {3, 18, 22, 24}, // 23
+        {2, 19, 23}      // 24
+    };
 
 
     // Number of pre-defined samples (exemplary begin states). 
