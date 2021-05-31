@@ -22,7 +22,7 @@
 // 5. There are pre-defined (hard-coded) interesting targed configurations.
 //
 
-#include "statep25.h"
+#include "State.h"
 #include <vector>
 
 class GraphP25
@@ -52,14 +52,14 @@ private:
     static const StateP25 m_goal;
 
     // Maximal number of children for any state in graph (space state)
-    enum{MAXCHILDNO = 4};
+    inline static constexpr unsigned int MAXCHILDNO = 4;
 
     // Allowed moves. The first element of each row determines number of allowed moves.
     static const char m_moves[StateP25::TILENO][MAXCHILDNO + 1];
 
 
     // Number of pre-defined samples (exemplary begin states). 
-    enum{SAMPLENO = 9};
+    inline static constexpr unsigned int SAMPLENO = 9;
 
     // Pre-defined exemplary states
     static const char m_sample[SAMPLENO][StateP25::TILENO];

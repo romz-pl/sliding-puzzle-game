@@ -38,9 +38,11 @@ public:
     using Cost = int;
 
 public:
-    // WIDTH: Width of the squared board
-    // TILENO: Number of tiles on the board
-    enum{WIDTH = 5, TILENO = WIDTH * WIDTH};
+    // Width of the squared board
+    inline static constexpr unsigned int WIDTH = 5;
+
+    // Number of tiles on the board
+    inline static constexpr unsigned int TILENO = WIDTH * WIDTH;
 
 
 public:
