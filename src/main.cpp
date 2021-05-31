@@ -83,15 +83,13 @@ void RunAstar( const StateP25& beg )
 
     std::cout << "NUMBER-OF-STATES-IN-FOUND-PATH = " << ( stateNo - 1 ) << "\n\n";
 
-    std::cout << "FOUND-MOVES:\n";
-	for(size_t i = 0; i < stateNo; i++)
-	{
-		if(i < stateNo - 1)
-			path[i + 1].PrintDiff(path[i]);
-
-		if((i+1) % 10 == 0)
-            std::cout << "\n";
-	}
+    std::cout << "FOUND-MOVES: ";
+    for(size_t i = 0; i < stateNo; i++)
+    {
+        if(i < stateNo - 1)
+            path[i + 1].PrintDiff(path[i]);
+    }
+    std::cout << "\n";
 
 	
     // printf("\n\nCALCULATION-TIME = %d second(s)\n\n", as.FindTime());
