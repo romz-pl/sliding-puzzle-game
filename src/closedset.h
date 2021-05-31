@@ -74,11 +74,11 @@ template <typename S>
 class LessN
 {
 public:
-	bool operator() (const PathNode<S>* const a, const PathNode<S>* const b) const
-	{
-		assert(a && b);
-		return (a->m_state < b->m_state);
-	}
+    bool operator() (const PathNode<S>* const a, const PathNode<S>* const b) const
+    {
+        assert(a && b);
+        return (a->m_state < b->m_state);
+    }
 };
 
 //
@@ -95,23 +95,23 @@ public:
     ClosedSet(void);
     ~ClosedSet(void);
 
-	void Add(PathNode<S>* p);
-	bool Search(const S& state) const;
+    void Add(PathNode<S>* p);
+    bool Search(const S& state) const;
 
-	void Erase(void);
-	size_t Size() const;
+    void Erase(void);
+    size_t Size() const;
 
     void PrintStats() const;
 
 private:
-	// Container storing pointers to "PathNode<S>"
-	std::set< PathNode<S>*, LessN<S> > m_set;
+    // Container storing pointers to "PathNode<S>"
+    std::set< PathNode<S>*, LessN<S> > m_set;
 
 #ifdef ASTAR_STATISTICS
-	mutable size_t m_stats_erase;  // Number of calls for function Erase
-	mutable size_t m_stats_add;    // Number of calls for function Add
-	mutable size_t m_stats_search; // Number of calls for function Search
-	mutable size_t m_stats_size;   // Number of calls for function Size
+    mutable size_t m_stats_erase;  // Number of calls for function Erase
+    mutable size_t m_stats_add;    // Number of calls for function Add
+    mutable size_t m_stats_search; // Number of calls for function Search
+    mutable size_t m_stats_size;   // Number of calls for function Size
 #endif
 };
 
@@ -123,10 +123,10 @@ inline
 ClosedSet<S>::ClosedSet(void)
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_erase = 0;
-	m_stats_add = 0;
-	m_stats_search = 0;
-	m_stats_size = 0;
+    m_stats_erase = 0;
+    m_stats_add = 0;
+    m_stats_search = 0;
+    m_stats_size = 0;
 #endif
 }
 
@@ -137,7 +137,7 @@ template<typename S>
 inline
 ClosedSet<S>::~ClosedSet(void)
 {
-	Erase();
+    Erase();
 }
 
 
@@ -149,14 +149,14 @@ template<typename S>
 void ClosedSet<S>::Erase(void)
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_erase++;
+    m_stats_erase++;
 #endif
 
 // std::set< PathNode<S>*, LessN<S> >::iterator it = m_set.begin();
 //
-//	for(; it != m_set.end(); ++it)
-//		delete (*it);
-	m_set.clear();
+//  for(; it != m_set.end(); ++it)
+//      delete (*it);
+    m_set.clear();
 }
 
 
@@ -168,11 +168,11 @@ inline
 void ClosedSet<S>::Add(PathNode<S>* p)
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_add++;
+    m_stats_add++;
 #endif
 
-	assert(p);
-	m_set.insert(p);
+    assert(p);
+    m_set.insert(p);
 }
 
 //
@@ -183,7 +183,7 @@ inline
 bool ClosedSet<S>::Search(const S& state) const
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_search++;
+    m_stats_search++;
 #endif
 
 // This is a temporary object required for comparison.
@@ -193,7 +193,7 @@ bool ClosedSet<S>::Search(const S& state) const
 // This object can be treated as a wrapper for "state" object.
 PathNode<S> tmp(state, NULL, 0, 0);
 
-	return (m_set.count(&tmp) > 0);
+    return (m_set.count(&tmp) > 0);
 }
 
 //
@@ -204,10 +204,10 @@ inline
 size_t ClosedSet<S>::Size() const
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_size++;
+    m_stats_size++;
 #endif
 
-	return m_set.size();
+    return m_set.size();
 }
 
 //

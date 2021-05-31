@@ -32,42 +32,42 @@
 template<typename S>
 class OpenSetHash
 {
-	typedef typename S::Cost Cost;
+    typedef typename S::Cost Cost;
 public:
-	OpenSetHash(void);
+    OpenSetHash(void);
 
-	void Add(PathNode<S>* t);
-	void RemoveBest(void);
-	void Update(PathNode<S>* p, PathNode<S>* newParent, Cost newG);
+    void Add(PathNode<S>* t);
+    void RemoveBest(void);
+    void Update(PathNode<S>* p, PathNode<S>* newParent, Cost newG);
 
 
-	PathNode<S>* Best(void) const;
-	PathNode<S>* Search(const S& state) const;
+    PathNode<S>* Best(void) const;
+    PathNode<S>* Search(const S& state) const;
 
-	bool IsEmpty(void) const;
-	size_t Size(void) const;
+    bool IsEmpty(void) const;
+    size_t Size(void) const;
 
-	void Erase(void);
+    void Erase(void);
 
     void PrintStats() const;
 
 private:
-	// Array storing data, needed by priority queue
-	std::set< PathNode<S>*, LessF<S> > m_set;
+    // Array storing data, needed by priority queue
+    std::set< PathNode<S>*, LessF<S> > m_set;
 
-	// Auxiliary data to speed up searching for state.
-	HashSet<S> m_aux;
+    // Auxiliary data to speed up searching for state.
+    HashSet<S> m_aux;
 
 #ifdef ASTAR_STATISTICS
-	mutable size_t m_stats_add;
-	mutable size_t m_stats_best;
-	mutable size_t m_stats_removeBest;
-	mutable size_t m_stats_search;
-	mutable size_t m_stats_erase;
-	mutable size_t m_stats_isEmpty;
-	mutable size_t m_stats_update;
-	mutable size_t m_stats_size;
-	mutable size_t m_stats_collision; // Number of collisions in hash table
+    mutable size_t m_stats_add;
+    mutable size_t m_stats_best;
+    mutable size_t m_stats_removeBest;
+    mutable size_t m_stats_search;
+    mutable size_t m_stats_erase;
+    mutable size_t m_stats_isEmpty;
+    mutable size_t m_stats_update;
+    mutable size_t m_stats_size;
+    mutable size_t m_stats_collision; // Number of collisions in hash table
 #endif
 };
 
@@ -80,15 +80,15 @@ inline
 OpenSetHash<S>::OpenSetHash(void) : m_aux(10000000)
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_add = 0;
-	m_stats_best = 0;
-	m_stats_removeBest = 0;
-	m_stats_search = 0;
-	m_stats_erase = 0;
-	m_stats_isEmpty = 0;
-	m_stats_update = 0;
-	m_stats_size = 0;
-	m_stats_collision = 0;
+    m_stats_add = 0;
+    m_stats_best = 0;
+    m_stats_removeBest = 0;
+    m_stats_search = 0;
+    m_stats_erase = 0;
+    m_stats_isEmpty = 0;
+    m_stats_update = 0;
+    m_stats_size = 0;
+    m_stats_collision = 0;
 #endif
 }
 
@@ -99,11 +99,11 @@ template<typename S>
 void OpenSetHash<S>::Erase(void)
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_erase++;
+    m_stats_erase++;
 #endif
 
-	m_set.clear();
-	m_aux.Clear();
+    m_set.clear();
+    m_aux.Clear();
 }
 
 //
@@ -114,10 +114,10 @@ inline
 bool OpenSetHash<S>::IsEmpty(void) const
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_isEmpty++;
+    m_stats_isEmpty++;
 #endif
 
-	return m_set.empty();
+    return m_set.empty();
 }
 
 //
@@ -128,23 +128,23 @@ inline
 void OpenSetHash<S>::Add(PathNode<S>* p)
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_add++;
+    m_stats_add++;
 #endif
 
-	assert(p);
-	// Duplications are not allowed. Pointer "p" must not be in OPEN SET
-	assert(m_set.count(p) == 0); 
+    assert(p);
+    // Duplications are not allowed. Pointer "p" must not be in OPEN SET
+    assert(m_set.count(p) == 0); 
 
-	m_set.insert(p);
+    m_set.insert(p);
 
 #ifdef ASTAR_STATISTICS
-	m_stats_collision += m_aux.Insert(p);
+    m_stats_collision += m_aux.Insert(p);
 #else
-	m_aux.Insert(p);
+    m_aux.Insert(p);
 #endif
 
-	// Check the synchronization after operation
-	assert(m_aux.Count() == m_set.size());
+    // Check the synchronization after operation
+    assert(m_aux.Count() == m_set.size());
 }
 
 //
@@ -155,11 +155,11 @@ inline
 PathNode<S>* OpenSetHash<S>::Best(void) const
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_best++;
+    m_stats_best++;
 #endif
 
-	// Return the pointer to "the best" node
-	return *(m_set.begin());
+    // Return the pointer to "the best" node
+    return *(m_set.begin());
 }
 
 //
@@ -170,24 +170,24 @@ inline
 void OpenSetHash<S>::RemoveBest(void)
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_removeBest++;
+    m_stats_removeBest++;
 #endif
 
-	// OPEN SET must not be empty
-	assert(!m_set.empty());
+    // OPEN SET must not be empty
+    assert(!m_set.empty());
 
-	// Get the iterator to "the best" node
-	typename std::set< PathNode<S>*, LessF<S> >::const_iterator it = m_set.begin();
+    // Get the iterator to "the best" node
+    typename std::set< PathNode<S>*, LessF<S> >::const_iterator it = m_set.begin();
 
-	// FIRST. Remove "the best" node from auxiliary set
-	PathNode<S>* p = *it;
-	m_aux.Erase(p->m_state);
+    // FIRST. Remove "the best" node from auxiliary set
+    PathNode<S>* p = *it;
+    m_aux.Erase(p->m_state);
 
-	// SECOND. Remove "the best" node from OPEN SET
-	m_set.erase(it);
-	
-	// Check the synchronization after operation
-	assert(m_aux.Count() == m_set.size());
+    // SECOND. Remove "the best" node from OPEN SET
+    m_set.erase(it);
+    
+    // Check the synchronization after operation
+    assert(m_aux.Count() == m_set.size());
 }
 
 //
@@ -199,10 +199,10 @@ inline
 PathNode<S>* OpenSetHash<S>::Search(const S& state) const
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_search++;
+    m_stats_search++;
 #endif
 
-	return m_aux.Find(state);
+    return m_aux.Find(state);
 }
 
 //
@@ -213,23 +213,23 @@ inline
 void OpenSetHash<S>::Update(PathNode<S>* p, PathNode<S>* newParent, Cost newG)
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_update++;
+    m_stats_update++;
 #endif
 
-	// Erase pointer "p" from OPEN SET
-	m_set.erase(m_set.find(p));
+    // Erase pointer "p" from OPEN SET
+    m_set.erase(m_set.find(p));
 
-	// Update value of object pointed by pointer "p"
-	p->m_g = newG;
-	p->m_parent = newParent;
+    // Update value of object pointed by pointer "p"
+    p->m_g = newG;
+    p->m_parent = newParent;
 
-	// Insert pointer "p" to OPEN SET
-	m_set.insert(p);
+    // Insert pointer "p" to OPEN SET
+    m_set.insert(p);
 
-	// Auxiliary set "m_aux" need not be modyfied
+    // Auxiliary set "m_aux" need not be modyfied
 
-	// Check the synchronization after operation
-	assert(m_aux.Count() == m_set.size());
+    // Check the synchronization after operation
+    assert(m_aux.Count() == m_set.size());
 }
 
 //
@@ -240,10 +240,10 @@ inline
 size_t OpenSetHash<S>::Size(void) const
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_size++;
+    m_stats_size++;
 #endif
 
-	return m_set.size();
+    return m_set.size();
 }
 
 
@@ -261,7 +261,7 @@ void OpenSetHash<S>::PrintStats() const
     std::cout << "  OpenSetHash::Size...... = " << m_stats_size << "\n";
     std::cout << "  OpenSetHash::Collision. = " << m_stats_collision << "\n";
 #else
-	// fprintf(out, "OpenSetSTL. No statistics available!\n");
+    // fprintf(out, "OpenSetSTL. No statistics available!\n");
 #endif
 
 }

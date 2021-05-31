@@ -30,24 +30,24 @@ template<typename T>
 class MemMgr
 {
 public:
-	explicit MemMgr(unsigned int chunkSize);
-	~MemMgr(void);
+    explicit MemMgr(unsigned int chunkSize);
+    ~MemMgr(void);
 
-	T* New(void);
-	void Erase(void);
+    T* New(void);
+    void Erase(void);
 
 private:
-	// Size of the m_chunkSize, i.e. size of the array pointed by element of m_tab
-	const unsigned int m_chunkSize;
+    // Size of the m_chunkSize, i.e. size of the array pointed by element of m_tab
+    const unsigned int m_chunkSize;
 
-	// Id of chunk with the first free object
-	unsigned int m_chunk;
+    // Id of chunk with the first free object
+    unsigned int m_chunk;
 
-	// Id of row with the first free object
-	unsigned int m_row;
+    // Id of row with the first free object
+    unsigned int m_row;
 
-	// Vector of pointers. Each element of vector points to an array.
-	std::vector<T*> m_tab;
+    // Vector of pointers. Each element of vector points to an array.
+    std::vector<T*> m_tab;
 };
 
 
@@ -71,8 +71,8 @@ MemMgr<T>::MemMgr( unsigned int chunkSize )
 template<typename T>
 MemMgr<T>::~MemMgr(void)
 {
-	for(unsigned int i = 0; i < m_tab.size(); i++)
-		delete [] m_tab[i];
+    for(unsigned int i = 0; i < m_tab.size(); i++)
+        delete [] m_tab[i];
 }
 
 //
@@ -81,21 +81,21 @@ MemMgr<T>::~MemMgr(void)
 template<typename T>
 T* MemMgr<T>::New(void)
 {
-	m_row++; // Take next free row
+    m_row++; // Take next free row
 
-	if(m_row == m_chunkSize)
-	{
-		// Create new m_chunkSize
-		T* p = new T[m_chunkSize];
-		assert(p);
-		m_tab.push_back(p);
+    if(m_row == m_chunkSize)
+    {
+        // Create new m_chunkSize
+        T* p = new T[m_chunkSize];
+        assert(p);
+        m_tab.push_back(p);
 
-		// Jump to begin of the next chunk
-		m_chunk++;
-		m_row = 0;
-	}
+        // Jump to begin of the next chunk
+        m_chunk++;
+        m_row = 0;
+    }
 
-	return &(m_tab[m_chunk][m_row]);
+    return &(m_tab[m_chunk][m_row]);
 }
 
 //
@@ -104,13 +104,13 @@ T* MemMgr<T>::New(void)
 template<typename T>
 void MemMgr<T>::Erase(void)
 {
-	// Index "i" starts from (1) ONE!!!
-	for(unsigned int i = 1; i < m_tab.size(); i++)
-		delete [] m_tab[i];
+    // Index "i" starts from (1) ONE!!!
+    for(unsigned int i = 1; i < m_tab.size(); i++)
+        delete [] m_tab[i];
 
-	m_tab.resize(1);
-	m_chunk = 0;
-	m_row = 0;
+    m_tab.resize(1);
+    m_chunk = 0;
+    m_row = 0;
 }
 
 #endif

@@ -28,41 +28,41 @@
 class GraphP25
 {
 public:
-	// Declaration of type "State" is required by template class "Astar"
-	typedef StateP25 State;
+    // Declaration of type "State" is required by template class "Astar"
+    typedef StateP25 State;
 
-	// Declaration of type "Cost" is required by template class "Astar"
-	typedef StateP25::Cost Cost;
+    // Declaration of type "Cost" is required by template class "Astar"
+    typedef StateP25::Cost Cost;
 
 public:
-	Cost CalcH(const State& x); 
-	bool IsGoal(const State& x) const;
+    Cost CalcH(const State& x); 
+    bool IsGoal(const State& x) const;
 
-	size_t MaxChildNo(void) const;
-	size_t GetChildren(const State& x, std::vector<State>& child, std::vector<Cost>& cost, std::vector<Cost>& heur);
+    size_t MaxChildNo(void) const;
+    size_t GetChildren(const State& x, std::vector<State>& child, std::vector<Cost>& cost, std::vector<Cost>& heur);
 
 private:
-	StateP25::Cost Manhattan(const StateP25& x) const;
+    StateP25::Cost Manhattan(const StateP25& x) const;
 
     static char MovesNo( uint8_t idx );
     static char Move( uint8_t sp, uint8_t j );
 
 private:
-	// The GOAL state
-	static const StateP25 m_goal;
+    // The GOAL state
+    static const StateP25 m_goal;
 
-	// Maximal number of children for any state in graph (space state)
-	enum{MAXCHILDNO = 4};
+    // Maximal number of children for any state in graph (space state)
+    enum{MAXCHILDNO = 4};
 
-	// Allowed moves. The first element of each row determines number of allowed moves.
-	static const char m_moves[StateP25::TILENO][MAXCHILDNO + 1];
+    // Allowed moves. The first element of each row determines number of allowed moves.
+    static const char m_moves[StateP25::TILENO][MAXCHILDNO + 1];
 
 
-	// Number of pre-defined samples (exemplary begin states). 
-	enum{SAMPLENO = 9};
+    // Number of pre-defined samples (exemplary begin states). 
+    enum{SAMPLENO = 9};
 
-	// Pre-defined exemplary states
-	static const char m_sample[SAMPLENO][StateP25::TILENO];
+    // Pre-defined exemplary states
+    static const char m_sample[SAMPLENO][StateP25::TILENO];
 };
 
 //
@@ -71,7 +71,7 @@ private:
 inline
 size_t GraphP25::MaxChildNo(void) const
 {
-	return MAXCHILDNO;
+    return MAXCHILDNO;
 }
 
 //
@@ -80,7 +80,7 @@ size_t GraphP25::MaxChildNo(void) const
 inline
 bool GraphP25::IsGoal(const StateP25& x) const
 {
-	return (x == m_goal);
+    return (x == m_goal);
 }
 
 //
@@ -110,7 +110,7 @@ char GraphP25::Move( uint8_t sp, uint8_t j )
 inline
 StateP25::Cost GraphP25::CalcH(const StateP25& x)
 {
-	return Manhattan(x);
+    return Manhattan(x);
 }
 
 #endif

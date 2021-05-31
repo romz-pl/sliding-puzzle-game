@@ -32,54 +32,54 @@
 #include <iostream>
 
 template<typename Graph, 
-	template <typename S> class CS = ClosedSetHash,
-	template <typename S> class OS = OpenSetHash> 
+    template <typename S> class CS = ClosedSetHash,
+    template <typename S> class OS = OpenSetHash> 
 class Astar
 {
 private:
-	typedef typename Graph::State State;
-	typedef typename Graph::Cost  Cost;
+    typedef typename Graph::State State;
+    typedef typename Graph::Cost  Cost;
 
 public:
-	explicit Astar(unsigned int chunkSize = 10000);
+    explicit Astar(unsigned int chunkSize = 10000);
 
     bool Find(Graph& graph, const State& beg, std::vector<State>& path, Cost& cost);
 
-	size_t ClosedNo(void) const { return m_cs.Size(); }
-	size_t OpenNo  (void) const { return m_os.Size(); }
+    size_t ClosedNo(void) const { return m_cs.Size(); }
+    size_t OpenNo  (void) const { return m_os.Size(); }
 
-	time_t FindTime(void) const { return m_findTime; }
+    time_t FindTime(void) const { return m_findTime; }
 
     void PrintStats() const;
 
 private:
-	void ChildLoop(Graph& graph, PathNode<State>* x);
-	void CreatePath(const PathNode<State>* target, std::vector<State>& path);
+    void ChildLoop(Graph& graph, PathNode<State>* x);
+    void CreatePath(const PathNode<State>* target, std::vector<State>& path);
 
 private:
-	// Closed set
-	CS<State> m_cs;
+    // Closed set
+    CS<State> m_cs;
 
-	// Open set
-	OS<State> m_os;
+    // Open set
+    OS<State> m_os;
 
-	// Calculation time. In seconds
-	time_t m_findTime;
+    // Calculation time. In seconds
+    time_t m_findTime;
 
-	// Generated children for analyzed node. Auxiliary buffer.
-	std::vector<State> m_child;
+    // Generated children for analyzed node. Auxiliary buffer.
+    std::vector<State> m_child;
 
-	// Cost from analyzed node to generated children. Auxiliary buffer.
-	std::vector<Cost> m_cost;
+    // Cost from analyzed node to generated children. Auxiliary buffer.
+    std::vector<Cost> m_cost;
 
-	// Heuristic from analyzed node to generated children. Auxiliary buffer.
-	std::vector<Cost> m_heur;
+    // Heuristic from analyzed node to generated children. Auxiliary buffer.
+    std::vector<Cost> m_heur;
 
-	// Memory menager
-	MemMgr< PathNode<State> > m_mem;
+    // Memory menager
+    MemMgr< PathNode<State> > m_mem;
 
 #ifdef ASTAR_STATISTICS
-	size_t m_stats_loopNo;
+    size_t m_stats_loopNo;
 #endif
 };
 
@@ -109,53 +109,53 @@ time_t begTime, endTime;
 bool found = false;
 
 #ifdef ASTAR_STATISTICS
-	m_stats_loopNo = 0;
+    m_stats_loopNo = 0;
 #endif
 
-	::time(&begTime);
+    ::time(&begTime);
 
-	m_cs.Erase();
-	m_os.Erase();
-	m_mem.Erase();
+    m_cs.Erase();
+    m_os.Erase();
+    m_mem.Erase();
 
-	{
-	const size_t maxChildNo = graph.MaxChildNo();
-	m_child.resize(maxChildNo);
-	m_cost.resize(maxChildNo);
-	m_heur.resize(maxChildNo);
-	}
+    {
+    const size_t maxChildNo = graph.MaxChildNo();
+    m_child.resize(maxChildNo);
+    m_cost.resize(maxChildNo);
+    m_heur.resize(maxChildNo);
+    }
 
-	const Cost h = graph.CalcH(beg);
-	p = m_mem.New();
-	p->Set(beg, NULL, 0, h);
-	m_os.Add(p);
+    const Cost h = graph.CalcH(beg);
+    p = m_mem.New();
+    p->Set(beg, NULL, 0, h);
+    m_os.Add(p);
 
-	while(!m_os.IsEmpty())
-	{
+    while(!m_os.IsEmpty())
+    {
 #ifdef ASTAR_STATISTICS
-		m_stats_loopNo++;
+        m_stats_loopNo++;
 #endif
-		cnt++;
+        cnt++;
         if(cnt % 10000  == 0) { std::cout << "." << std::flush; }
         if(cnt % 100000 == 0) { std::cout << cnt / 1000 << std::flush; }
 
-		// the node in openset having the lowest f_score value
-		p = m_os.Best();
-		if(graph.IsGoal(p->m_state))
-		{
-			CreatePath(p, path);
-			found = true;
-			break;
-		}
-		m_os.RemoveBest();
-		m_cs.Add(p);
+        // the node in openset having the lowest f_score value
+        p = m_os.Best();
+        if(graph.IsGoal(p->m_state))
+        {
+            CreatePath(p, path);
+            found = true;
+            break;
+        }
+        m_os.RemoveBest();
+        m_cs.Add(p);
 
-		ChildLoop(graph, p);
-	}
+        ChildLoop(graph, p);
+    }
 
-	::time(&endTime);
-	m_findTime = endTime - begTime; 
-	return found;
+    ::time(&endTime);
+    m_findTime = endTime - begTime; 
+    return found;
 }
 
 //
@@ -166,33 +166,33 @@ void Astar<Graph, CS, OS>::ChildLoop(Graph& graph, PathNode<State>* node)
 {
 PathNode<State> *p;
 
-	assert(node);
+    assert(node);
 
-	const size_t childNo = graph.GetChildren(node->m_state, m_child, m_cost, m_heur);
+    const size_t childNo = graph.GetChildren(node->m_state, m_child, m_cost, m_heur);
 
-	for(size_t i = 0; i < childNo; i++)
-	{
-		const State &y = m_child[i];
-		if(m_cs.Search(y))
-			continue;
+    for(size_t i = 0; i < childNo; i++)
+    {
+        const State &y = m_child[i];
+        if(m_cs.Search(y))
+            continue;
 
-		const Cost g = node->m_g + m_cost[i];
+        const Cost g = node->m_g + m_cost[i];
 
-		p = m_os.Search(y);
+        p = m_os.Search(y);
 
-		if(p == NULL)
-		{
-			p = m_mem.New();
-			p->Set(y, node, g, m_heur[i]);
-			m_os.Add(p);
-		}
-		else if(g < p->m_g)
-		{
-			// Object pointed by "p" was changed, hence OPEN SET must be updated
-			m_os.Update(p, node, g);
-		}
+        if(p == NULL)
+        {
+            p = m_mem.New();
+            p->Set(y, node, g, m_heur[i]);
+            m_os.Add(p);
+        }
+        else if(g < p->m_g)
+        {
+            // Object pointed by "p" was changed, hence OPEN SET must be updated
+            m_os.Update(p, node, g);
+        }
 
-	}
+    }
 }
 
 //
@@ -203,19 +203,19 @@ void Astar<Graph, CS, OS>::CreatePath(const PathNode<State>* node, std::vector<S
 {
 std::list<State> tmp; // Temporary list for storing states in proper order
 
-	while(node)
-	{
-		tmp.push_front(node->m_state);
-		node = node->m_parent;
-	}
+    while(node)
+    {
+        tmp.push_front(node->m_state);
+        node = node->m_parent;
+    }
 
-	// Copying states from list to array
-	typename std::list<State>::const_iterator it;
-	size_t i = 0;
-	
-	path.resize(tmp.size()); // 
-	for(it = tmp.begin(); it != tmp.end(); ++it, ++i)
-		path[i] = *it;
+    // Copying states from list to array
+    typename std::list<State>::const_iterator it;
+    size_t i = 0;
+    
+    path.resize(tmp.size()); // 
+    for(it = tmp.begin(); it != tmp.end(); ++it, ++i)
+        path[i] = *it;
 }
 
 //
@@ -226,7 +226,7 @@ void Astar<Graph, CS, OS>::PrintStats() const
 {
 #ifdef ASTAR_STATISTICS
     std::cout << "\nSTATISTICS:\n";
-	
+    
     std::cout << "  Astar::LoopNo = " << m_stats_loopNo << "\n\n";
 
     m_os.PrintStats();
@@ -235,7 +235,7 @@ void Astar<Graph, CS, OS>::PrintStats() const
     m_cs.PrintStats();
     std::cout << "\n";
 #else
-	// fprintf(out, "Astar. No statistics available!\n");
+    // fprintf(out, "Astar. No statistics available!\n");
 #endif
 }
 

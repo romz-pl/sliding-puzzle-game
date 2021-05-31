@@ -30,26 +30,26 @@ template<typename S>
 class ClosedSetHash
 {
 public:
-	ClosedSetHash(void);
+    ClosedSetHash(void);
 
-	void Add(PathNode<S>* p);
-	bool Search(const S& state) const;
+    void Add(PathNode<S>* p);
+    bool Search(const S& state) const;
 
-	void Erase(void);
-	size_t Size() const;
+    void Erase(void);
+    size_t Size() const;
 
     void PrintStats() const;
 
 private:
-	// Container storing pointers to "PathNode<S>"
-	HashSet<S> m_set;
+    // Container storing pointers to "PathNode<S>"
+    HashSet<S> m_set;
 
 #ifdef ASTAR_STATISTICS
-	mutable size_t m_stats_erase;     // Number of calls for function Erase
-	mutable size_t m_stats_add;       // Number of calls for function Add
-	mutable size_t m_stats_search;    // Number of calls for function Search
-	mutable size_t m_stats_size;      // Number of calls for function Size
-	mutable size_t m_stats_collision; // Number of collisions in hash table
+    mutable size_t m_stats_erase;     // Number of calls for function Erase
+    mutable size_t m_stats_add;       // Number of calls for function Add
+    mutable size_t m_stats_search;    // Number of calls for function Search
+    mutable size_t m_stats_size;      // Number of calls for function Size
+    mutable size_t m_stats_collision; // Number of collisions in hash table
 #endif
 
 };
@@ -62,11 +62,11 @@ inline
 ClosedSetHash<S>::ClosedSetHash(void) : m_set(10000000)
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_erase = 0;
-	m_stats_add = 0;
-	m_stats_search = 0;
-	m_stats_size = 0;
-	m_stats_collision = 0;
+    m_stats_erase = 0;
+    m_stats_add = 0;
+    m_stats_search = 0;
+    m_stats_size = 0;
+    m_stats_collision = 0;
 #endif
 }
 
@@ -78,10 +78,10 @@ template<typename S>
 void ClosedSetHash<S>::Erase(void)
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_erase++;
+    m_stats_erase++;
 #endif
 
-	m_set.Clear();
+    m_set.Clear();
 }
 
 //
@@ -92,17 +92,17 @@ inline
 void ClosedSetHash<S>::Add(PathNode<S>* p)
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_add++;
+    m_stats_add++;
 #endif
 
-	assert(p);
+    assert(p);
 
 #ifdef ASTAR_STATISTICS
-	m_stats_collision += m_set.Insert(p);
+    m_stats_collision += m_set.Insert(p);
 #else
-	m_set.Insert(p);
+    m_set.Insert(p);
 #endif
-	
+    
 }
 
 //
@@ -113,10 +113,10 @@ inline
 bool ClosedSetHash<S>::Search(const S& state) const
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_search++;
+    m_stats_search++;
 #endif
 
-	return (m_set.Find(state) != NULL);
+    return (m_set.Find(state) != NULL);
 }
 
 //
@@ -127,10 +127,10 @@ inline
 size_t ClosedSetHash<S>::Size() const
 {
 #ifdef ASTAR_STATISTICS
-	m_stats_size++;
+    m_stats_size++;
 #endif
 
-	return m_set.Count();
+    return m_set.Count();
 }
 
 //
@@ -146,7 +146,7 @@ void ClosedSetHash<S>::PrintStats() const
     std::cout << "  ClosedSetHash::Size......... = " << m_stats_size << "\n";
     std::cout << "  ClosedSetHash::Collisions... = " << m_stats_collision << "\n";
 #else
-	// fprintf(out, "ClosedSetSTL. No statistics available!\n");
+    // fprintf(out, "ClosedSetSTL. No statistics available!\n");
 #endif
 }
 
