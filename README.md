@@ -1,5 +1,17 @@
 # Sliding puzzle game
 
+# How to build
+
+```
+git clone ----
+cd sliding-puzzle-game
+mkdir build
+cd build
+cmake ..
+make
+./src/sliding-puzzle
+```
+
 ## Algorithm description
 
 1. This program solves [sliding puzzle](https://en.wikipedia.org/wiki/Sliding_puzzle) for the board of size `5x5`, i.e. **puzzle 24 game**.
