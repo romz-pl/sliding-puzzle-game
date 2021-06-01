@@ -36,13 +36,13 @@ make
 
 2. There is the wiki article about [15 puzzle](https://en.wikipedia.org/wiki/15_puzzle) game with board of size `4x4`.
 
-3. The [A* algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm) has been implemeted for solving the puzzle 24 game.
+3. The [A* algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm) has been implemented for solving the puzzle 24 game.
 
 4. The input to the game is the initial configuration on the board. The solutions is the sequence of moves leading from the initial configuration to the final configuration. The final configuration for puzzle 24 game is presented above.
 
 5. In order to apply the A* algorithm, the graph and the distance between graph's nodes must be defined.
 
-6. In my approach the node of the graph is defined as a two-dimmensional squared array `5x5`. Each element of this array holds unique integer `x` in the range `0 <= x < 25`.
+6. In my approach the node of the graph is defined as a two-dimensional squared array `5x5`. Each element of this array holds unique integer `x` in the range `0 <= x < 25`.
 
 7. From the definition of sliding puzzle game, it is known, that one piece of the board is empty. Only the piece that is in the direct neighborhood of the empty slot can be moved into this position. Moving the tile the new configuration of the board is defined. That's way the next node in the the game graph is defined.
 
