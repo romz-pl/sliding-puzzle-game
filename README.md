@@ -4,7 +4,7 @@
 
 On Linux machine, from command line type the follwoing:
 ```
-git clone ----
+git clone https://github.com/romz-pl/sliding-puzzle-game.git
 cd sliding-puzzle-game
 mkdir build
 cd build
