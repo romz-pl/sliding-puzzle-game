@@ -1,6 +1,8 @@
 # Sliding puzzle game
 
-1. This program solves [Sliding puzzle](https://en.wikipedia.org/wiki/Sliding_puzzle) for the board of size `5x5`, i.e. **puzzle 24 game**.
+## Algorithm description
+
+1. This program solves [sliding puzzle](https://en.wikipedia.org/wiki/Sliding_puzzle) for the board of size `5x5`, i.e. **puzzle 24 game**.
 
 ```
 --------------------------
