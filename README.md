@@ -13,6 +13,11 @@ make
 ./src/sliding-puzzle
 ```
 
+1. `cmake` is used to build the program.
+2. C++17 is used to implement the algorithm
+3. The program was build with `g++` and `clang` compilers.
+4. There is no external dependencies.
+
 ## Algorithm description
 
 1. This program solves [sliding puzzle](https://en.wikipedia.org/wiki/Sliding_puzzle) for the board of size `5x5`, i.e. **puzzle 24 game**.
