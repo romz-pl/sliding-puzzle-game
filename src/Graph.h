@@ -86,13 +86,6 @@ private:
         {3, 18, 22, 24}, // 23
         {2, 19, 23}      // 24
     };
-
-
-    // Number of pre-defined samples (exemplary begin states). 
-    inline static constexpr unsigned int SAMPLENO = 9;
-
-    // Pre-defined exemplary states
-    static const char m_sample[SAMPLENO][State::TILENO];
 };
 
 //
