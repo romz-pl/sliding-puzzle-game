@@ -7,7 +7,7 @@
 //
     
 
-// This macro must be defined befor including "astar.h"
+// This macro must be defined before including "astar.h"
 // #define ASTAR_STATISTICS
 
 #include "astar.h"
@@ -43,7 +43,7 @@ void RunAstar( const State& beg )
 
     std::cout << "SELECTED-BEGIN-STATE:\n";
     beg.Print(stdout);
-    std::cout << "\nComputing...";
+    std::cout << "\nComputing..." << std::flush;
 
     const std::optional<std::vector<State>> path = as.Find(graph, beg);
     if(!path.has_value())
@@ -64,19 +64,22 @@ void RunAstar( const State& beg )
 
     const size_t stateNo = path.value().size();
     std::cout << "SOLUTION (" << stateNo - 1 << "): ";
-    for(size_t i = 0; i < stateNo; i++)
+    for(size_t i = 0; i < stateNo - 1; i++)
     {
-        if(i < stateNo - 1)
-            path.value()[i + 1].PrintDiff(path.value()[i]);
+        path.value()[i + 1].PrintDiff(path.value()[i]);
     }
+
     std::cout << "\n";
 
-
-    /*for(size_t i = 0; i < path.size(); i++)
+    constexpr bool show_states{ false };
+    if constexpr(show_states)
     {
-        path[i].Print(stdout);
-        std::cout << "\n\n";
-    }*/ 
+        for(size_t i = 0; i < path.value().size(); i++)
+        {
+            path.value()[i].Print(stdout);
+            std::cout << "\n\n";
+        }
+    }
 
 }
 

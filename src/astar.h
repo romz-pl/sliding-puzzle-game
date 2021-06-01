@@ -96,7 +96,6 @@ Astar<CS, OS>::Astar(unsigned int chunkSize) : m_mem(chunkSize)
 template<template <typename S> class CS, template <typename S> class OS>
 std::optional<std::vector<State>> Astar<CS, OS>::Find(Graph& graph, const State& beg)
 {
-size_t cnt = 0;
 PathNode<State>* p;
 
 #ifdef ASTAR_STATISTICS
@@ -121,9 +120,6 @@ PathNode<State>* p;
 #ifdef ASTAR_STATISTICS
         m_stats_loopNo++;
 #endif
-        cnt++;
-        if(cnt % 10000  == 0) { std::cout << "." << std::flush; }
-        if(cnt % 100000 == 0) { std::cout << cnt / 1000 << std::flush; }
 
         // the node in openset having the lowest f_score value
         p = m_os.Best();
