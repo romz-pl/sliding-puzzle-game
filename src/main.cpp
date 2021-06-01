@@ -38,8 +38,6 @@ void RunAstar( const State& beg )
 {
     Astar as;
     Graph graph;
-    bool pathFound;
-
 
     std::cout << "SELECTED-BEGIN-STATE:\n";
     beg.Print(stdout);

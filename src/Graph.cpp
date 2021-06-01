@@ -54,7 +54,7 @@ Cost Graph::Manhattan(const State& s) const
 char cx, cy, gx, gy;
 Cost h = 0;
 
-    for(char i = 0; i < State::TILENO; i++)
+    for(uint i = 0; i < State::TILENO; i++)
     {
         // do not count the blank 
         if(s.IsSpace(i))

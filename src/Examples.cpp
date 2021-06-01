@@ -11,7 +11,7 @@ Examples::Examples()
 
 State Examples::Get(size_t id) const
 {
-    return at(1);
+    return at(id);
 }
 
 State Examples::Ex01()

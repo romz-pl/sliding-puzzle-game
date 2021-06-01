@@ -44,7 +44,7 @@ State::State()
 //
 State::State( const std::array< char, State::TILENO > tab )
 {
-    for(int i = 0; i < TILENO; i++)
+    for(uint i = 0; i < TILENO; i++)
         m_tab[i] = tab[i];
 }
 
@@ -56,7 +56,7 @@ State::State( const std::array< char, State::TILENO > tab )
 //
 bool State::operator<(const State& s) const
 {
-    for(int i = 0; i < TILENO; i++)
+    for(uint i = 0; i < TILENO; i++)
     {
         if(m_tab[i] < s.m_tab[i])
             return true;
@@ -143,7 +143,7 @@ void State::Read( const std::string& path )
             throw std::invalid_argument( msg );
         }
 
-        for( int x = 0; x < WIDTH; x++ )
+        for( uint x = 0; x < WIDTH; x++ )
         {
             ss >> val;
             if( val < 0 || val > 24 )
@@ -169,8 +169,7 @@ void State::Read( const std::string& path )
 //
 char State::SpaceIdx(void) const
 {
-char i = 0;
-
+    uint i = 0;
     for(; i < TILENO; i++)
     {
         if(m_tab[i] == 0)
