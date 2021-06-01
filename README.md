@@ -42,7 +42,7 @@ make
 
 5. In order to apply the A* algorithm, the graph and the distance between graph's nodes must be defined.
 
-6. In my approach the node of the graph is defined as a two-dimmensional squared array `5x5`. Each element of this array holds unique integer `x` in the range `0 <= x < 25`.
+6. In my approach the node of the graph is defined as a two-dimensional squared array `5x5`. Each element of this array holds unique integer `x` in the range `0 <= x < 25`.
 
 7. From the definition of sliding puzzle game, it is known, that one piece of the board is empty. Only the piece that is in the direct neighborhood of the empty slot can be moved into this position. Moving the tile the new configuration of the board is defined. That's way the next node in the the game graph is defined.
 
