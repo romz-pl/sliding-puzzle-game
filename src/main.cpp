@@ -7,8 +7,8 @@
 //
     
 
-// This must be defined befor including "astar.h"
-#define ASTAR_STATISTICS
+// This macro must be defined befor including "astar.h"
+// #define ASTAR_STATISTICS
 
 #include "astar.h"
 #include "Graph.h"
@@ -19,21 +19,16 @@
 void Intro();
 void RunAstar( const State& beg );
 
-int main(int argc, char* argv[])
+int main(int /*argc*/, char** /*argv*/)
 {
     Intro( );
 
-    /*if( argc != 2 )
-    {
-        std::cout << "Invalid number of parameters.\n";
-        std::cout << "Provide file name for the initial state\n";
-        return 1;
-    }
-    */
-
     Examples examples;
 
-    RunAstar( examples.Get(2) );
+    for(const State& s : examples)
+    {
+        RunAstar( s );
+    }
     
     return 0;
 }
@@ -48,26 +43,27 @@ void RunAstar( const State& beg )
 
     std::cout << "SELECTED-BEGIN-STATE:\n";
     beg.Print(stdout);
-    std::cout << "\n\nComputing...";
+    std::cout << "\nComputing...";
 
     const std::optional<std::vector<State>> path = as.Find(graph, beg);
     if(!path.has_value())
     {
         std::cout << "Path NOT found for START state:\n";
-        beg.Print(stdout);
         return;
     }
-    std::cout << "...Ok\n";
-    const size_t stateNo = path.value().size();
-    as.PrintStats();
+    std::cout << "Ok\n";
 
+#ifdef ASTAR_STATISTICS
+    as.PrintStats();
     std::cout << "\nFINAL-NUMBER-OF-STATES:\n";
     std::cout << "   Closed-set... = " << as.ClosedNo() << "\n";
     std::cout << "   Open-set..... = " << as.OpenNo() << "\n\n";
 
-    std::cout << "NUMBER-OF-STATES-IN-FOUND-PATH = " << ( stateNo - 1 ) << "\n\n";
+    std::cout << "NUMBER-OF-STATES-IN-FOUND-PATH = " << ( path.value().size() - 1 ) << "\n\n";
+#endif
 
-    std::cout << "FOUND-MOVES: ";
+    const size_t stateNo = path.value().size();
+    std::cout << "SOLUTION (" << stateNo - 1 << "): ";
     for(size_t i = 0; i < stateNo; i++)
     {
         if(i < stateNo - 1)
@@ -82,8 +78,6 @@ void RunAstar( const State& beg )
         std::cout << "\n\n";
     }*/ 
 
-    
-    // printf("\n***** Calculations completed successfully! *****\n\n");
 }
 
 
