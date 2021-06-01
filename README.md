@@ -1,7 +1,8 @@
 # Sliding puzzle game
 
-# How to build
+## How to build
 
+On Linux machine, from command line type the follwoing:
 ```
 git clone ----
 cd sliding-puzzle-game
