@@ -36,7 +36,7 @@ make
 
 2. There is the wiki article about [15 puzzle](https://en.wikipedia.org/wiki/15_puzzle) game with board of size `4x4`.
 
-3. The [A* algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm) has been implemeted for solving the puzzle 24 game.
+3. The [A* algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm) has been implemented for solving the puzzle 24 game.
 
 4. The input to the game is the initial configuration on the board. The solutions is the sequence of moves leading from the initial configuration to the final configuration. The final configuration for puzzle 24 game is presented above.
 
