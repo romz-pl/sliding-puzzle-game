@@ -14,8 +14,8 @@ make
 ```
 
 1. `cmake` is used to build the program.
-2. C++17 is used to implement the algorithm
-3. The program was build with `g++` and `clang` compilers.
+2. `C++17` is used to implement the algorithm
+3. The program was build and tested with `g++` and `clang++` compilers.
 4. There is no external dependencies.
 
 ## Algorithm description
